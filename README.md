@@ -10,7 +10,7 @@ Kotlin-based application utilizing the following Android technologies:
 - ConstraintLayout
 - Navigation Graph with fragments
 
-Exercises the TDA authorization sequence based on credentials you supply (within TDALoginHelper file):
+Exercises the TD Ameritrade API based on credentials you supply (within TDALoginHelper file):
 - acquire authorization code
 - acquire access token and refresh token
 - refresh access token with refresh token as necessary
