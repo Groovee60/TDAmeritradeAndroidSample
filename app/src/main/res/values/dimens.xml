@@ -1,0 +1,19 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="status_button_dim">40dp</dimen>
+
+    <dimen name="margin_view">16dp</dimen>
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="margin_button">8dp</dimen>
+    <dimen name="margin_option">22dp</dimen>
+
+    <dimen name="quote_ht">36dp</dimen>
+    <dimen name="menu_item_ht">48dp</dimen>
+    <dimen name="tab_layout_ht">26dp</dimen>
+
+    <dimen name="symbol_width">100dp</dimen>
+    <dimen name="price_width">80dp</dimen>
+
+
+</resources>

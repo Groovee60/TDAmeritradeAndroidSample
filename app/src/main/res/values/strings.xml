@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TDA Example</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="td_ameritrade">TD Ameritrade</string>
+
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+
+    <string name="get_quotes">Get Quotes</string>
+
+    <string name="symbol">Symbol</string>
+    <string name="bid">Bid</string>
+    <string name="ask">Ask</string>
+    <string name="last">Last</string>
+    <string name="chg">Chg</string>
+
+    <string name="refreshing_access_token">Refreshing access token...</string>
+    <string name="no_internet">You do not appear to have internet connectivity</string>
+    <string name="error_connectivity">Please verify that you are connected to the internet and try again.</string>
+    <string name="error_unhandled_spec">Unhandled exception: %s</string>
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.MenuFragment">
+
+    <ImageView
+        android:id="@+id/tdaStatusButton"
+        android:layout_width="@dimen/status_button_dim"
+        android:layout_height="@dimen/status_button_dim"
+        android:layout_marginTop="@dimen/margin_view"
+        android:layout_marginStart="@dimen/margin_view"
+        android:contentDescription="@null"
+        android:src="@drawable/button_off"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/Font.Menu"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/status_button_dim"
+        android:layout_marginStart="@dimen/margin_button"
+        android:text="@string/td_ameritrade"
+        app:layout_constraintStart_toEndOf="@id/tdaStatusButton"
+        app:layout_constraintTop_toTopOf="@id/tdaStatusButton" />
+
+    <Button
+        android:id="@+id/tdaLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/status_button_dim"
+        android:text="@string/logout"
+        android:layout_marginEnd="@dimen/margin_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tdaStatusButton" />
+
+    <TextView
+        android:id="@+id/getQuotes"
+        style="@style/Font.Menu"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/menu_item_ht"
+        android:layout_marginTop="@dimen/margin_view"
+        android:paddingStart="@dimen/margin_option"
+        android:paddingEnd="0dp"
+        android:text="@string/get_quotes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tdaStatusButton" />
+
+    <FrameLayout
+        android:id="@+id/webViewFrame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="4dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <WebView
+            android:id="@+id/tdaWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

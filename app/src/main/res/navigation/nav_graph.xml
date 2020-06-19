@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/MenuFragment">
+
+    <fragment
+        android:id="@+id/MenuFragment"
+        android:name="com.groodysoft.tdaexample.fragment.MenuFragment"
+        tools:layout="@layout/fragment_menu" >
+
+        <action
+            android:id="@+id/action_MenuFragment_to_GetQuotesFragment"
+            app:destination="@id/GetQuotesFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/GetQuotesFragment"
+        android:name="com.groodysoft.tdaexample.fragment.GetQuotesFragment"
+        tools:layout="@layout/fragment_quotes" />
+
+</navigation>
