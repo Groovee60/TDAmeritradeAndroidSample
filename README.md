@@ -1,15 +1,14 @@
 # TDAmeritradeAndroidSample
 
 Kotlin-based application utilizing the following Android technologies:
-
-MVVM (Model-View-View Model) Architecture
-Live Data
-Coroutines
-Retrofit API library with GSON converter
-Koin dependency injection library for preference module
-Data binding within exemplary RecyclerView/ListAdapter mechanism
-ConstraintLayout
-Navigation Graph with fragments
+- MVVM (Model-View-View Model) Architecture
+- Live Data
+- Coroutines
+- Retrofit API library with GSON converter
+- Koin dependency injection library for preference module
+- Data binding within exemplary RecyclerView/ListAdapter mechanism
+- ConstraintLayout
+- Navigation Graph with fragments
 
 Exercises the TDA authorization sequence based on credentials you supply (within TDALoginHelper file):
 - acquire authorization code
