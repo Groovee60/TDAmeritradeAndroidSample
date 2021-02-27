@@ -13,18 +13,18 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.groodysoft.tdaexample.*
+import com.groodysoft.tdaexample.api.TDALoginHelper
 import com.groodysoft.tdaexample.app.LOGTAG
 import com.groodysoft.tdaexample.app.MainApplication
 import com.groodysoft.tdaexample.app.PREF_KEY_AUTH_CODE
 import com.groodysoft.tdaexample.app.PREF_KEY_TOKEN_RESPONSE
-import com.groodysoft.tdaexample.api.TDALoginHelper
+import com.groodysoft.tdaexample.databinding.FragmentMenuBinding
 import com.groodysoft.tdaexample.viewmodel.TDAInitialTokenViewModel
 import com.groodysoft.tdaexample.viewmodel.TDARefreshedTokenViewModel
-import kotlinx.android.synthetic.main.fragment_menu.*
 import org.koin.android.ext.android.inject
+import java.lang.NullPointerException
 import java.util.*
 
 
@@ -33,6 +33,8 @@ class MenuFragment : SubtitledFragment() {
     private val prefs by inject<SharedPreferences>()
 
     private var tdaLoggedIn = false
+
+    private lateinit var binding: FragmentMenuBinding
 
     private enum class WaitingOnRefresh {
         None,
@@ -43,9 +45,10 @@ class MenuFragment : SubtitledFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        return inflater.inflate(R.layout.fragment_menu, container, false)
+        binding = FragmentMenuBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,19 +71,23 @@ class MenuFragment : SubtitledFragment() {
         enableLoginStatus()
         enableOptions()
 
-        tdaLoginButton.setOnClickListener {
+        binding.tdaLoginButton.setOnClickListener {
 
-            if (tdaLoggedIn) {
-                tdaLogout()
-            } else if (requireActivity().isInternetAvailable()) {
-                attemptTDALogin()
-            } else {
-                requireActivity().showConnectivityToast()
+            when {
+                tdaLoggedIn -> {
+                    tdaLogout()
+                }
+                requireActivity().isInternetAvailable() -> {
+                    attemptTDALogin()
+                }
+                else -> {
+                    requireActivity().showConnectivityToast()
+                }
             }
         }
 
 
-        getQuotes.setOnClickListener {
+        binding.getQuotes.setOnClickListener {
 
             if (validateAccessToken()) {
                 getQuotes()
@@ -108,12 +115,12 @@ class MenuFragment : SubtitledFragment() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun getAuthCode() {
 
-        val webSettings: WebSettings = tdaWebView.settings
+        val webSettings: WebSettings = binding.tdaWebView.settings
         webSettings.javaScriptEnabled = true
 
-        webViewFrame.isVisible = true
-        tdaWebView.loadUrl(TDALoginHelper.AUTH_CODE_URL)
-        tdaWebView.webViewClient = object : WebViewClient() {
+        binding.webViewFrame.isVisible = true
+        binding.tdaWebView.loadUrl(TDALoginHelper.AUTH_CODE_URL)
+        binding.tdaWebView.webViewClient = object : WebViewClient() {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
@@ -124,9 +131,19 @@ class MenuFragment : SubtitledFragment() {
                 if (url.toString().startsWith(TDALoginHelper.REDIRECT_URI)) {
                     val sanitizer = UrlQuerySanitizer(url)
                     val authCode = sanitizer.getValue("code")
-                    webViewFrame.isVisible = false
+                    binding.webViewFrame.isVisible = false
                     prefs.edit().putString(PREF_KEY_AUTH_CODE, authCode).apply()
-                    gotAuthCode(authCode)
+
+                    try {
+                        gotAuthCode(authCode)
+                    } catch (e: Exception) {
+                        val message = if (e is NullPointerException) {
+                            "Did you forget to set your own authentication values in TDALoginHelper?"
+                        } else {
+                            "Exception: ${e.message}"
+                        }
+                        requireActivity().showAlert(message)
+                    }
                 }
             }
 
@@ -138,7 +155,7 @@ class MenuFragment : SubtitledFragment() {
     private fun gotAuthCode(authCode: String) {
 
         val tokenResponseViewModel = TDAInitialTokenViewModel(authCode)
-        tokenResponseViewModel.initialToken.observe(viewLifecycleOwner, Observer {
+        tokenResponseViewModel.initialToken.observe(viewLifecycleOwner, {
 
             storeTDATokenResponse(it)
             tdaLogin()
@@ -154,8 +171,8 @@ class MenuFragment : SubtitledFragment() {
 
     private fun enableLoginStatus() {
 
-        tdaLoginButton.setLoggedIn(tdaLoggedIn)
-        tdaStatusButton.setLoggedIn(tdaLoggedIn)
+        binding.tdaLoginButton.setLoggedIn(tdaLoggedIn)
+        binding.tdaStatusButton.setLoggedIn(tdaLoggedIn)
     }
 
     private fun tdaLogout() {
@@ -174,7 +191,7 @@ class MenuFragment : SubtitledFragment() {
 
     private fun enableOptions() {
 
-        getQuotes.isEnabled = tdaLoggedIn
+        binding.getQuotes.isEnabled = tdaLoggedIn
     }
 
     private fun validateAccessToken(): Boolean {
@@ -189,15 +206,15 @@ class MenuFragment : SubtitledFragment() {
 
         if (needsRefresh) {
 
-            progress.isVisible = true
+            binding.progress.isVisible = true
 
             Toast.makeText(requireContext(), R.string.refreshing_access_token, Toast.LENGTH_SHORT).show()
 
             val refreshedTokenViewModel = TDARefreshedTokenViewModel()
-            refreshedTokenViewModel.refreshedToken.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            refreshedTokenViewModel.refreshedToken.observe(viewLifecycleOwner, {
 
                 storeTDATokenResponse(it, true)
-                progress.isVisible = false
+                binding.progress.isVisible = false
 
                 when (waitingOnRefresh) {
                     WaitingOnRefresh.GetQuotes -> getQuotes()
@@ -231,10 +248,6 @@ class MenuFragment : SubtitledFragment() {
         editor.remove(PREF_KEY_AUTH_CODE) // it will never work again
         editor.putString(PREF_KEY_TOKEN_RESPONSE, jsonTokenResponse)
         editor.apply()
-    }
-
-    private fun attemptTickerTockerLogin() {
-
     }
 }
 
