@@ -40,21 +40,21 @@ android {
 
 dependencies {
 
-    def activityKtxVersion = '1.1.0'
-    def appCompatVersion = '1.1.0'
-    def constraintLayoutVersion = '2.0.0-beta7'
-    def coroutinesVersion = '1.3.4'
-    def coreKtxVersion = '1.3.0'
+    def activityKtxVersion = '1.2.0'
+    def appCompatVersion = '1.2.0'
+    def constraintLayoutVersion = '2.0.4'
+    def coroutinesVersion = '1.3.8'
+    def coreKtxVersion = '1.3.2'
     def gsonVersion = '2.8.6'
-    def interceptorVersion = '4.2.2'
+    def interceptorVersion = '4.7.2'
     def koinVersion = '2.0.1'
-    def lifecycleVersion = '2.2.0'
-    def materialVersion = '1.1.0'
-    def navigationKtxVersion = '2.2.2'
-    def retrofitVersion = '2.6.1'
+    def lifecycleVersion = '2.3.0'
+    def materialVersion = '1.3.0'
+    def navigationKtxVersion = '2.3.3'
+    def retrofitVersion = '2.9.0'
 
     def assertJCoreVersion = '2.5.0'
-    def junitVersion = '4.12'
+    def junitVersion = '4.13.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
